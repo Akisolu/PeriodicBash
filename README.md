@@ -1,4 +1,4 @@
-# 🧪 PeriodicBash (PostgreSQL + Bash CLI + Normalizacion)
+# 🧪 PeriodicBash (PostgreSQL + Bash CLI + Normalización)
 Una aplicación Bash para buscar elementos de la tabla periódica. El objetivo principal fue normalizar y corregir errores una base de datos ya existente `periodic_table_old.sql` para transformarlo en `periodic_table.sql`.
 Evitando redundancia (duplicacion) de datos, garantizando atomicidad  de los datos (un campo, un dato), y la integridad de los datos
 
@@ -11,12 +11,21 @@ Evitando redundancia (duplicacion) de datos, garantizando atomicidad  de los dat
     - **Campos obligatorios expuestos en elements:** `symbol` y `name` permiten NULL, lo que posibilitaría registrar elementos anónimos o sin símbolo en el catálogo principal.
     - **Atributos repetidos y sobre-fragmentación:** `type` debe ser una tabla independiente (3FN) y la división 1-a-1 entre `elements` y `properties` exige hacer `JOINs` innecesarios.
   - **Volcado de la base de datos normalizada (`periodic_table.sql`):** La nueva base de datos corrigue los errores de su antecesora `periodic_table_old
-    - **Símbolos en mayuscula:** Todos los simbolos quimicos su primera o unica letra ahora esta en mayuscula
+    - **Símbolos en mayuscula:** Todos los símbolos químicos tienen su primera o única letra en mayúscula (ej. `He`, `Li`).
     - **Integridad referencial:** Se agrego una `FOREIGN KEY` entre `properties` y `elements` garantizando la integridad referencial, conectar tablas y evitar datos erróneos.
     - **Sin Restricciones Redundantes:** Si una restriccion no se necesita, no se implenta, beneficiando al mantenimiento de la base de datos.
     - **Imposibilidad de Datos Vacio:** Por diseño ya no se aceptan datos vacíos en ningun campo
     - **Normalizacion:** Se separa el campo `type` de properties y se reemplaza por una Clave Foranea llamada `type_id`, que se relaciona con `type_id` de la tabla `type`, cumpliendo la Tercera Forma Normal (3FN)
   - **Script `element.sh`:** Un Script de Bash que permite consulta la informacion de un elemento de la tabla periodica registrado en la base de datps (`periodic_table.sql`).
+
+## 📂 Estructura del Proyecto
+```text
+.
+├── element.sh             # Script ejecutable principal de la CLI
+├── periodic_table.sql     # Dump de la base de datos normalizada
+├── periodic_table_old.sql # Dump de la base de datos original sin normalizar
+└── README.md              # Documentación del proyecto
+```
 
 ## 🛠️ Tecnologías Utilizadas
   - **Base de Datos:** PostgreSQL
@@ -35,9 +44,14 @@ Tener instalado y configurado PostgreSQL en tu entorno local.
 ```bash
   psql -U postgres < periodic_table.sql
 ```
+> [!WARNING]  
+> **Cuidado:**  
+> Asegurate de ejecutar `psql -U postgres < periodic_table.sql` y no `psql -U postgres < periodic_table_old.sql`,
+> sino importaras la base de datos sin los arreglos y normalizaciones que ejecute.
+
 3. **Dar permisos a la aplicación:**
 ```bash
-  chmod +x salon.sh
+  chmod +x element.sh
 ```
 
 ## 👨‍💻 Guia de uso 
