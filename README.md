@@ -1,74 +1,76 @@
-# 🧪 PeriodicBash (PostgreSQL + Bash CLI + Normalización)
-Una aplicación Bash para buscar elementos de la tabla periódica. El objetivo principal fue normalizar y corregir errores una base de datos ya existente `periodic_table_old.sql` para transformarlo en `periodic_table.sql`.
-Evitando redundancia (duplicacion) de datos, garantizando atomicidad  de los datos (un campo, un dato), y la integridad de los datos
+# 🧪 PeriodicBash (PostgreSQL + Bash CLI + Normalization)
+*🇪🇸 [Leer en español](README.es.md)*
 
-## 🚀 Características Clave
-  - **Volcado de la base de datos original (`periodic_table_old`):** La base de datos contiene datos inconsistentes
-    - **Símbolos en minúscula:** Como `he` y `li`, y el elemento ficticio `moTanium`
-    - **Falta de integridad referencial:** No existe `FOREIGN KEY` entre `properties` y `elements`, permitiendo registros huérfanos.
-    - **Restricciones Redundantes:** Restricciones `UNIQUE` redundantes sobre las claves primarias.
-    - **Riesgo de datos incompletos y JOINs inconsistentes:** `melting_point` y `boiling_point` en `properties` permiten nulos, lo que puede causar pérdidas de información o comportamiento inesperado al operar o filtrar dichos datos sin valor.
-    - **Campos obligatorios expuestos en elements:** `symbol` y `name` permiten NULL, lo que posibilitaría registrar elementos anónimos o sin símbolo en el catálogo principal.
-    - **Atributos repetidos y sobre-fragmentación:** `type` debe ser una tabla independiente (3FN) y la división 1-a-1 entre `elements` y `properties` exige hacer `JOINs` innecesarios.
-  - **Volcado de la base de datos normalizada (`periodic_table.sql`):** La nueva base de datos corrigue los errores de su antecesora `periodic_table_old
-    - **Símbolos en mayuscula:** Todos los símbolos químicos tienen su primera o única letra en mayúscula (ej. `He`, `Li`).
-    - **Integridad referencial:** Se agrego una `FOREIGN KEY` entre `properties` y `elements` garantizando la integridad referencial, conectar tablas y evitar datos erróneos.
-    - **Sin Restricciones Redundantes:** Si una restriccion no se necesita, no se implenta, beneficiando al mantenimiento de la base de datos.
-    - **Imposibilidad de Datos Vacio:** Por diseño ya no se aceptan datos vacíos en ningun campo
-    - **Normalizacion:** Se separa el campo `type` de properties y se reemplaza por una Clave Foranea llamada `type_id`, que se relaciona con `type_id` de la tabla `type`, cumpliendo la Tercera Forma Normal (3FN)
-  - **Script `element.sh`:** Un Script de Bash que permite consulta la informacion de un elemento de la tabla periodica registrado en la base de datps (`periodic_table.sql`).
+A Bash application to search for elements of the periodic table. The main objective was to normalize and correct errors in an already existing database `periodic_table_old.sql` to transform it into `periodic_table.sql`.
+Avoiding data redundancy (duplication), guaranteeing data atomicity (one field, one data point), and data integrity.
 
-## 📂 Estructura del Proyecto
+## 🚀 Key Features
+  - **Dump of the original database (`periodic_table_old`):** The database contains inconsistent data
+    - **Lowercase symbols:** Like `he` and `li`, and the fictional element `moTanium`.
+    - **Lack of referential integrity:** There is no `FOREIGN KEY` between `properties` and `elements`, allowing orphaned records.
+    - **Redundant constraints:** Redundant `UNIQUE` constraints on primary keys.
+    - **Risk of incomplete data and inconsistent JOINs:** `melting_point` and `boiling_point` in `properties` allow nulls, which can cause information loss or unexpected behavior when operating or filtering such data without a value.
+    - **Mandatory fields exposed in elements:** `symbol` and `name` allow NULL, which would make it possible to register anonymous elements or elements without a symbol in the main catalog.
+    - **Repeated attributes and over-fragmentation:** `type` should be an independent table (3NF) and the 1-to-1 division between `elements` and `properties` requires making unnecessary `JOINs`.
+  - **Dump of the normalized database (`periodic_table.sql`):** The new database corrects the errors of its predecessor `periodic_table_old`
+    - **Uppercase symbols:** All chemical symbols have their first or only letter capitalized (e.g., `He`, `Li`).
+    - **Referential integrity:** A `FOREIGN KEY` was added between `properties` and `elements` guaranteeing referential integrity, connecting tables and avoiding erroneous data.
+    - **No redundant constraints:** If a constraint is not needed, it is not implemented, benefiting the maintenance of the database.
+    - **Impossibility of empty data:** By design, empty data is no longer accepted in any field.
+    - **Normalization:** The `type` field is separated from properties and replaced by a Foreign Key called `type_id`, which is related to `type_id` of the `type` table, complying with the Third Normal Form (3NF).
+  - **`element.sh` script:** A Bash Script that allows querying the information of a periodic table element registered in the database (`periodic_table.sql`).
+
+## 📂 Project Structure
 ```text
 .
-├── element.sh             # Script ejecutable principal de la CLI
-├── periodic_table.sql     # Dump de la base de datos normalizada
-├── periodic_table_old.sql # Dump de la base de datos original sin normalizar
-└── README.md              # Documentación del proyecto
+├── element.sh             # Main CLI executable script
+├── periodic_table.sql     # Dump of the normalized database
+├── periodic_table_old.sql # Dump of the original unnormalized database
+└── README.md              # Project documentation
 ```
 
-## 🛠️ Tecnologías Utilizadas
-  - **Base de Datos:** PostgreSQL
-  - **Lenguaje:** Bash / Shell Scripting (psql CLI)
+## 🛠️ Technologies Used
+  - **Database:** PostgreSQL
+  - **Language:** Bash / Shell Scripting (psql CLI)
 
-## 💻 Instalación y Ejecución
-### Prerrequisitos
-Tener instalado y configurado PostgreSQL en tu entorno local.  
-### Pasos
-1. **Clonar el repositorio:**
+## 💻 Installation and Execution
+### Prerequisites
+Have PostgreSQL installed and configured in your local environment.  
+### Steps
+1. **Clone the repository:**
 ```bash
   git clone https://github.com/Aki-new/PeriodicBash.git
   cd PeriodicBash
 ```
-2. **Crear e importar el esquema de la base de datos:**
+2. **Create and import the database schema:**
 ```bash
   psql -U postgres < periodic_table.sql
 ```
 > [!WARNING]  
-> **Cuidado:**  
-> Asegurate de ejecutar `psql -U postgres < periodic_table.sql` y no `psql -U postgres < periodic_table_old.sql`,
-> sino importaras la base de datos sin los arreglos y normalizaciones que ejecute.
+> **Careful:**  
+> Make sure to execute `psql -U postgres < periodic_table.sql` and not `psql -U postgres < periodic_table_old.sql`,
+> otherwise you will import the database without the fixes and normalizations I performed.
 
-3. **Dar permisos a la aplicación:**
+3. **Give permissions to the application:**
 ```bash
   chmod +x element.sh
 ```
 
-## 👨‍💻 Guia de uso 
-- Si ejecutas directamente `./element.sh` obtendras un mensaje que dice `Please provide an element as an argument.`
-- Para que se ejecute le debes dar un parametro, puede ser el numero atomico, un simbolo quimico o directamente el nombre
+## 👨‍💻 Usage Guide 
+- If you execute directly `./element.sh` you will get a message saying `Please provide an element as an argument.`
+- For it to run you must give it a parameter, it can be the atomic number, a chemical symbol or directly the name
   ```bash
-    # Ejemplos
+    # Examples
     ./element.sh 1
     ./element.sh H
     ./element.sh Hydrogen
   ```
-- Cualquier entrada de ejemplo generara la misma salida
+- Any sample input will generate the same output
   ```plaintext
     The element with atomic number 1 is Hydrogen (H). It's a nonmetal, with a mass of 1.008 amu. Hydrogen has a melting point of -259.1 celsius and a boiling point of -252.9 celsius.
   ```
 
-## 📜 Créditos y Reconocimientos
+## 📜 Credits and Acknowledgments
 
-* **Origen de la consigna / dataset:** Este proyecto es uno de los desafíos requeridos para la obtención de la **Certificación de Bases de Datos Relacionales** de [freeCodeCamp](https://www.freecodecamp.org/).
-* **Implementación:** La lógica de scripts en Bash (`element.sh`) y la estructuración del esquema PostgreSQL (`periodic_table.sql`) fueron desarrolladas por completo como resolución individual al problema planteado.
+* **Origin of the prompt / dataset:** This project is one of the challenges required to obtain the **Relational Database Certification** from [freeCodeCamp](https://www.freecodecamp.org/).
+* **Implementation:** The bash script logic (`element.sh`) and the structuring of the PostgreSQL schema (`periodic_table.sql`) were completely developed as an individual solution to the proposed problem.
