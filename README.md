@@ -1,4 +1,4 @@
-# ­ƒº¬ PeriodicBash (PostgreSQL + Bash CLI + Normalization)
+# 🧪 PeriodicBash (PostgreSQL + Bash CLI + Normalization)
 
 > **What it does:** A command-line tool that looks up chemical elements in a database and shows that the data was cleaned up: no duplicates, no orphan records, consistent names.
 > **Why it matters:** The original database had repeated data and broken links between tables, so queries could return wrong answers.
@@ -6,12 +6,12 @@
 > **Por qué importa:** La base de datos original tenía datos repetidos y enlaces rotos entre tablas, por lo que las consultas podían devolver respuestas incorrectas.
 >
 > 📄 Versión completa en español: [README.es.md](README.es.md)
-*­ƒç¬­ƒç© [Leer en espa├▒ol](README.es.md)*
+*🇪🇸 [Leer en español](README.es.md)*
 
 A Bash application to search for elements of the periodic table. The main objective was to normalize and correct errors in an already existing database `periodic_table_old.sql` to transform it into `periodic_table.sql`.
 Avoiding data redundancy (duplication), guaranteeing data atomicity (one field, one data point), and data integrity.
 
-## ­ƒÜÇ Key Features
+## 🚀 Key Features
   - **Dump of the original database (`periodic_table_old`):** The database contains inconsistent data
     - **Lowercase symbols:** Like `he` and `li`, and the fictional element `moTanium`.
     - **Lack of referential integrity:** There is no `FOREIGN KEY` between `properties` and `elements`, allowing orphaned records.
@@ -27,20 +27,20 @@ Avoiding data redundancy (duplication), guaranteeing data atomicity (one field, 
     - **Normalization:** The `type` field is separated from properties and replaced by a Foreign Key called `type_id`, which is related to `type_id` of the `type` table, complying with the Third Normal Form (3NF).
   - **`element.sh` script:** A Bash Script that allows querying the information of a periodic table element registered in the database (`periodic_table.sql`).
 
-## ­ƒôé Project Structure
+## 📂 Project Structure
 ```text
 .
-Ôö£ÔöÇÔöÇ element.sh             # Main CLI executable script
-Ôö£ÔöÇÔöÇ periodic_table.sql     # Dump of the normalized database
-Ôö£ÔöÇÔöÇ periodic_table_old.sql # Dump of the original unnormalized database
-ÔööÔöÇÔöÇ README.md              # Project documentation
+├── element.sh             # Main CLI executable script
+├── periodic_table.sql     # Dump of the normalized database
+├── periodic_table_old.sql # Dump of the original unnormalized database
+└── README.md              # Project documentation
 ```
 
-## ­ƒøá´©Å Technologies Used
+## 🛠️ Technologies Used
   - **Database:** PostgreSQL
   - **Language:** Bash / Shell Scripting (psql CLI)
 
-## ­ƒÆ╗ Installation and Execution
+## 💻 Installation and Execution
 ### Prerequisites
 Have PostgreSQL installed and configured in your local environment.  
 ### Steps
@@ -63,7 +63,7 @@ Have PostgreSQL installed and configured in your local environment.
   chmod +x element.sh
 ```
 
-## ­ƒæ¿ÔÇì­ƒÆ╗ Usage Guide 
+## 👨‍💻 Usage Guide 
 - If you execute directly `./element.sh` you will get a message saying `Please provide an element as an argument.`
 - For it to run you must give it a parameter, it can be the atomic number, a chemical symbol or directly the name
   ```bash
@@ -77,7 +77,7 @@ Have PostgreSQL installed and configured in your local environment.
     The element with atomic number 1 is Hydrogen (H). It's a nonmetal, with a mass of 1.008 amu. Hydrogen has a melting point of -259.1 celsius and a boiling point of -252.9 celsius.
   ```
 
-## ­ƒô£ Credits and Acknowledgments
+## 📜 Credits and Acknowledgments
 
 * **Origin of the prompt / dataset:** This project is one of the challenges required to obtain the **Relational Database Certification** from [freeCodeCamp](https://www.freecodecamp.org/).
 * **Implementation:** The bash script logic (`element.sh`) and the structuring of the PostgreSQL schema (`periodic_table.sql`) were completely developed as an individual solution to the proposed problem.
