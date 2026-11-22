@@ -2,6 +2,9 @@
 
 *🇺🇸 [Read this in English](README.md)*
 
+**Qué hace:** Una herramienta de terminal que consulta elementos químicos en una base de datos y demuestra que los datos fueron limpiados: sin duplicados, sin registros huérfanos y con nombres consistentes.
+**Por qué importa:** La base de datos original tenía datos repetidos y enlaces rotos entre tablas, por lo que las consultas podían devolver respuestas incorrectas.
+
 Una aplicación Bash para buscar elementos de la tabla periódica. El objetivo principal fue normalizar y corregir errores una base de datos ya existente `periodic_table_old.sql` para transformarlo en `periodic_table.sql`.
 Evitando redundancia (duplicación) de datos, garantizando atomicidad  de los datos (un campo, un dato), y la integridad de los datos
 

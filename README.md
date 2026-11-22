@@ -1,10 +1,11 @@
 # 🧪 PeriodicBash (PostgreSQL + Bash CLI + Normalization)
 
-> **What it does:** A command-line tool that looks up chemical elements in a database and shows that the data was cleaned up: no duplicates, no orphan records, consistent names.
-> **Why it matters:** The original database had repeated data and broken links between tables, so queries could return wrong answers.
-> **Qué hace:** Una herramienta de terminal que consulta elementos químicos en una base de datos y demuestra que los datos fueron limpiados: sin duplicados, sin registros huérfanos y con nombres consistentes.
-> **Por qué importa:** La base de datos original tenía datos repetidos y enlaces rotos entre tablas, por lo que las consultas podían devolver respuestas incorrectas.
->
+**What it does:** A command-line tool that looks up chemical elements in a database and shows that the data was cleaned up: no duplicates, no orphan records, consistent names.
+**Why it matters:** The original database had repeated data and broken links between tables, so queries could return wrong answers.
+
+**Qué hace:** Una herramienta de terminal que consulta elementos químicos en una base de datos y demuestra que los datos fueron limpiados: sin duplicados, sin registros huérfanos y con nombres consistentes.
+**Por qué importa:** La base de datos original tenía datos repetidos y enlaces rotos entre tablas, por lo que las consultas podían devolver respuestas incorrectas.
+
 > 📄 Versión completa en español: [README.es.md](README.es.md)
 *🇪🇸 [Leer en español](README.es.md)*
 
